@@ -4,19 +4,17 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
-import com.capg.BookStoreManagement.exception.InvalidAdminException;
 import com.capg.BookStoreManagement.exception.InvalidUserException;
 import com.capg.BookStoreManagement.util.DBConnection;
 
 public class ValidateUserLogin {
 	
-	public boolean doValidateUser(Integer UserID,String password) {
+	public boolean doValidateUser(Integer UserID,String password) throws InvalidUserException {
 		
 		Connection con = DBConnection.con;
 	    PreparedStatement ps;
 	    
 		 try {
-			 
 			 int UserId=0;
 			 String UserPwd=null;
 		ps=con.prepareStatement("select userId,userPwd from user where userId=?");
@@ -32,12 +30,14 @@ public class ValidateUserLogin {
 				return true;
 			}
 			else {
+				System.out.println("-----------------------------------------");
 				System.out.println("Invalid Credentials");
+				System.out.println("-----------------------------------------");
 				throw new InvalidUserException();
 			}
 		 }
 			 catch(Exception e) {
-				 System.out.println("Exception while User Login");
+				 
 			 }
 			 return false;
 	    }

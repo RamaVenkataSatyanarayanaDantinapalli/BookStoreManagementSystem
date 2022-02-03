@@ -33,7 +33,7 @@ public class AdminServiceImplTest {
 	{
 		String title="Computer Science";
 		Book expectedOutput=new Book(456789321,"Computer Science","Johnson",2500,153);
-		Book actualOutput=ad.searchByBookTitle(title);
+		Book actualOutput=ad.searchByBookTitle(title);	
 		Assert.assertEquals(expectedOutput, actualOutput);
 	}
 	

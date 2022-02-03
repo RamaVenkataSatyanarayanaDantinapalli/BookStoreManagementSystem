@@ -388,9 +388,10 @@ public class UserDAOImpl implements UserDAO{
 	  public Integer getOrderQty(int userId,int orderId,int Isbn) {
 		  try {
 			     int OrderQty=0;
-				 ps=con.prepareStatement("select * from bookstoremanagement.order where userId=? and orderId=?");
+				 ps=con.prepareStatement("select * from bookstoremanagement.order where userId=? and orderId=? and bookIsbn=?");
 				 ps.setInt(1,userId);
 				 ps.setInt(2,orderId);
+				 ps.setInt(3,Isbn);
 				 ResultSet rs = ps.executeQuery(); // DML, i holds the value :- number of rows effected
 					while(rs.next()) {
 						OrderQty=rs.getInt("bookQuantity");	

@@ -10,7 +10,9 @@ public class ValidateAdminLogin {
 			return true;
 		}
 		else {
+			System.out.println("-----------------------------------------");
 			System.out.println("Invalid Credentials");
+			System.out.println("-----------------------------------------");
 			throw new InvalidAdminException();
 		}
 	}

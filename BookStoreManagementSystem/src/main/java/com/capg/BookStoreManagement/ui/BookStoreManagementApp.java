@@ -22,7 +22,8 @@ import com.capg.BookStoreManagement.services.UserServiceImpl;
 import com.capg.BookStoreManagement.sortings.*;
 public class BookStoreManagementApp {
 	Scanner sc=new Scanner(System.in);
-	static Scanner scr=new Scanner(System.in);
+	Scanner scr=new Scanner(System.in);
+	Scanner s=new Scanner(System.in);
 	AdminDAOImpl adminobj=new AdminDAOImpl();
 	AdminServiceImpl asi=new AdminServiceImpl();
 	UserServiceImpl usi=new UserServiceImpl();
@@ -126,7 +127,9 @@ public class BookStoreManagementApp {
 				   }
 				   break;
 			case 0:
-				   System.out.println("\n\n Application Closed ");
+				   System.out.println("-----------------------------------------");
+				   System.out.println("Application Closed ");
+				   System.out.println("-----------------------------------------");
 				   System.exit(0);
 				   break;
 			default:
@@ -337,15 +340,15 @@ public class BookStoreManagementApp {
 		 int ch2=sc.nextInt();
 		 switch(ch2) {
 		 case 1: //add books
-				System.out.println("enter inter national standard book number");
+				System.out.println("Enter inter national standard book number");
 				int isbn=sc.nextInt();
-				System.out.println("enter book title");
+				System.out.println("Enter book title");
 				String title=scr.nextLine();
-				System.out.println("enter book author");
+				System.out.println("Enter book author");
 				String author=scr.nextLine();
-				System.out.println("enter book price");
+				System.out.println("Enter book price");
 				int price=sc.nextInt();	
-				System.out.println("enter quantity");
+				System.out.println("Enter quantity");
 				int qty=sc.nextInt();
 			    Book b =new Book(isbn,title,author,price,qty);
 				status=asi.doAddBooks(b);
@@ -435,7 +438,7 @@ public class BookStoreManagementApp {
 					break;
 			 case 3:
 				   System.out.println("enter the book title");
-				   String titleSearch=scr.nextLine();
+				   String titleSearch=s.nextLine();
 				   status2=asi.searchByBookTitle(titleSearch);
 				   if(status2!=null) {
 					   go.PrintBookDetaisOfSearch(status2);
@@ -652,7 +655,6 @@ public class BookStoreManagementApp {
 				 List<Book> books=asi.getBooks();
 				 switch(ch4) {
 				 case 1:
-					 
 					 System.out.println("Displaying Books by Isbn");
 					 SortByBookIsbn IsbnCompare = new SortByBookIsbn();
 					 Collections.sort(books, IsbnCompare);
@@ -708,7 +710,7 @@ public class BookStoreManagementApp {
 						}
 						break;
 				 case 2://search by author name
-						System.out.println("enter the author name");
+						System.out.println("Enter the author name");
 						String authorSearch=scr.next();
 						status2=usi.doSearchBook(authorSearch);
 						if(status2!=null) {
@@ -721,8 +723,8 @@ public class BookStoreManagementApp {
 						}
 						break;
 				 case 3:
-					   System.out.println("enter the book title");
-					   String titleSearch=scr.nextLine();
+					   System.out.println("Enter the book title");
+					   String titleSearch=s.nextLine();
 					   status2=usi.searchByBookTitle(titleSearch);
 					   if(status2!=null) {
 						   go.PrintBookDetaisOfSearch(status2);
@@ -849,18 +851,19 @@ public class BookStoreManagementApp {
 					}
 				 break;
 			 case 8: //Cancel Order
-				    System.out.println("enter the orderId to Cancel Order");
+				    System.out.println("Enter the orderId to Cancel Order");
 				    int orderId=sc.nextInt();
 				    List<Order> CanceledOrders=usi.getCanceledOrders(userId, orderId);
 					Integer TotalRefundAmount=usi.doCalculateTotalCancelOrderPrice(userId,orderId);
 					
 				    List<Integer> getOrderIsbn=usi.getOrderIsbn(userId, orderId);
 						for(Integer OI:getOrderIsbn) {
-						int TotalBooks1=usi.getTotalBooks(OI);
-						int OrderQty=usi.getOrderQty(userId,orderId,OI);
-						int UpdateBookTotal=TotalBooks1+OrderQty;
-						usi.doUpdateBooksTotal(UpdateBookTotal,OI);
-					}
+							int UpdateBookTotal=0;
+						    int TotalBooks1=usi.getTotalBooks(OI);
+						    int OrderQty=usi.getOrderQty(userId,orderId,OI);
+					        UpdateBookTotal=TotalBooks1+OrderQty;
+						    usi.doUpdateBooksTotal(UpdateBookTotal,OI);
+						    }
 					go.PrintCanceledOrderDetais(CanceledOrders,TotalRefundAmount);
 					status=usi.doCancelOrder(userId,orderId);
 					if(status) {
